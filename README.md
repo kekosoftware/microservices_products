@@ -6,7 +6,7 @@ Incluye
 * [phpMyAdmin](https://www.phpmyadmin.net/) 
 
 ## Versiones incluidas
-* `PHP_VERSION`     -> 8.1.4-fpm-alpine3.14
+* `PHP_VERSION`     -> 7.4.23-apache
 * `MARIADB_VERSION` -> 10.4.21-focal
 
 ## Requerimientos
