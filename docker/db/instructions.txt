@@ -1,0 +1,1 @@
+mysql -u dbuser -p labco < db-ago20.sql

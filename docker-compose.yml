@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  mariadb:
+    build:
+      context: ./docker/mariadb
+      args:
+        mariadb_version: ${MARIADB_VERSION}
+    container_name: ${COMPOSE_PROJECT_NAME}-MariaDB
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8 --collation-server=utf8_general_ci
+    environment:
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${MARIADB_PASSWORD}
+    volumes:
+      - ./docker/db:/db
+    ports:
+      - "3386:3306"
+    restart: on-failure:10
+  
+  phpmyadmin:
+    container_name: ${COMPOSE_PROJECT_NAME}-phpMyAdmin
+    image: phpmyadmin/phpmyadmin
+    ports:
+        - '8080:80'
+    restart: on-failure:10
+    environment:
+        PMA_HOST: mariadb
+    depends_on:
+        - mariadb
+
+  php:
+    build:
+      context: ./docker/php
+      args:
+        php_version: ${PHP_VERSION}
+    container_name: ${COMPOSE_PROJECT_NAME}-PHP
+    ports:
+      - "${PHP_PORT}:80"
+    restart: on-failure:10
+    volumes:
+      - ./www:/var/www/html
+    links:
+      - mariadb
