@@ -5,41 +5,64 @@ services:
     build:
       context: ./docker/mariadb
       args:
-        mariadb_version: ${MARIADB_VERSION}
-    container_name: ${COMPOSE_PROJECT_NAME}-MariaDB
+        mariadb_version: 10.4.21-focal
+    container_name: MYTHERESA-DB
     command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8 --collation-server=utf8_general_ci
     environment:
-      MARIADB_DATABASE: ${MARIADB_DATABASE}
-      MARIADB_USER: ${MARIADB_USER}
-      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
-      MARIADB_ROOT_PASSWORD: ${MARIADB_PASSWORD}
+      MARIADB_DATABASE: mytheresa
+      MARIADB_USER: userDB
+      MARIADB_PASSWORD: pwdDB
+      MARIADB_ROOT_PASSWORD: pwdDB
     volumes:
       - ./docker/db:/db
     ports:
       - "3386:3306"
     restart: on-failure:10
+    networks:
+      red_interna:
+        ipv4_address: 192.168.20.10
+    hostname: servidor_mariadb
   
-  phpmyadmin:
-    container_name: ${COMPOSE_PROJECT_NAME}-phpMyAdmin
-    image: phpmyadmin/phpmyadmin
-    ports:
-        - '8080:80'
-    restart: on-failure:10
-    environment:
-        PMA_HOST: mariadb
-    depends_on:
-        - mariadb
-
-  php:
+  service-discount:
     build:
-      context: ./docker/php
+      context: ./docker/php-discount
       args:
-        php_version: ${PHP_VERSION}
-    container_name: ${COMPOSE_PROJECT_NAME}-PHP
+        php_version: 7.4.23-apache
+    container_name: MYTHERESA-DISCOUNT
     ports:
-      - "${PHP_PORT}:80"
+      - "82:82"
     restart: on-failure:10
     volumes:
-      - ./www:/var/www/html
-    links:
-      - mariadb
+      - ./www/discount:/var/www/html
+    networks:
+      red_interna:
+        ipv4_address: 192.168.20.20
+    hostname: servidor_web_discount
+
+  service-list:
+    build:
+      context: ./docker/php-list
+      args:
+        php_version: 7.4.23-apache
+    container_name: MYTHERESA-LIST
+    ports:
+      - "80:80"
+    restart: on-failure:10
+    volumes:
+      - ./www/list:/var/www/html
+    networks:
+      red_web:
+        ipv4_address: 192.168.10.10
+      red_interna:
+        ipv4_address: 192.168.20.30
+    hostname: servidor_web
+
+networks:
+    red_web:
+        ipam:
+            config:
+              - subnet: 192.168.10.0/24
+    red_interna:
+        ipam:
+            config:
+              - subnet: 192.168.20.0/24
