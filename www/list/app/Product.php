@@ -3,13 +3,17 @@
 class Product
 {    
     private $conn;
+    private $category = '';
+    private $priceLessThan = 0;
    
-    public function __construct() 
+    public function __construct($category, $priceLessThan) 
     {
         require_once 'app/Database.php';
         $database = new Database();
         
         $this->conn = $database->getConnection();
+        $this->category = $category;
+        $this->priceLessThan = $priceLessThan;
     }
 
     /**
@@ -17,36 +21,50 @@ class Product
      */
     public function getProducts()
     {
-        // Consulting database
-        $stmt = $this->conn->prepare(
-            "SELECT 
-                p.sku,
-                p.productName as name,
-                c.categoryName as category,
-                p.price
-             FROM 
-                Products p 
-             INNER JOIN 
-                Categories c 
-             ON 
-                p.categoryID = c.categoryID"
-            );
+        try {
+            // Consulting database
+            $sql = "SELECT 
+                        p.sku,
+                        p.productName as name,
+                        c.categoryName as category,
+                        p.price
+                    FROM 
+                        Products p 
+                    INNER JOIN 
+                        Categories c 
+                    ON 
+                        p.categoryID = c.categoryID";
+         
+            if ($this->category != '' && $this->priceLessThan != 0) {
+                $sql .= " WHERE c.`categoryName` = '$this->category'";
+                $sql .= " AND p.`price` < ".$this->priceLessThan;
+            } elseif ($this->category != '') {
+                $sql .= " WHERE c.`categoryName` = '$this->category'";
+            } elseif ($this->priceLessThan != 0) {
+                $sql .= " WHERE p.`price` < ".$this->priceLessThan;
+            }
+            
+            $stmt = $this->conn->prepare($sql);
+    
+            $stmt->execute();
+            $myProducts = $stmt->fetchAll(PDO::FETCH_OBJ);
+    
+            foreach ($myProducts as $myProduct) {
+                $price = $this->getDiscount($myProduct);
+    
+                $products[] = [
+                    'sku' => str_pad($myProduct->sku, 6, "0", STR_PAD_LEFT),
+                    'name' => $myProduct->name,
+                    'category' => $myProduct->category,
+                    'price' => json_decode($price),
+                ];
+            }
+            
+            return $products;
 
-        $stmt->execute();
-        $myProducts = $stmt->fetchAll(PDO::FETCH_OBJ);
-
-        foreach ($myProducts as $myProduct) {
-            $price = $this->getDiscount($myProduct);
-
-            $products[] = [
-                'sku' => str_pad($myProduct->sku, 6, "0", STR_PAD_LEFT),
-                'name' => $myProduct->name,
-                'category' => $myProduct->category,
-                'price' => json_decode($price),
-            ];
+        } catch (\Throwable $th) {
+            return "An error occurred while recovery the products. ".$th;
         }
-        
-        return $products;
     }
 
     /**

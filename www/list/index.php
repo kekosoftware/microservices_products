@@ -1,9 +1,14 @@
 <?php
 
 try {
+
+    // FILTERS
+    $category = $_GET['category'];
+    $priceLessThan = $_GET['priceLessThan'];
+
     require_once 'app/Product.php';
     
-    $items = new Product($db);
+    $items = new Product($category, $priceLessThan);
     
     $result = $items->getProducts();
     

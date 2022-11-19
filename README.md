@@ -1,68 +1,54 @@
-# Ambiente [Docker](https://www.docker.com) para Desarrollo
-Incluye
+# Enviroment [Docker](https://www.docker.com) by Microservices
 
-* [PHP](https://www.php.net/)
-* [MySQL](https://www.mysql.com/)
-* [phpMyAdmin](https://www.phpmyadmin.net/) 
+## Include:
+* [Git](https://git-scm.com/) - Version: 20.10.21
+* [Docker Compose](https://docs.docker.com/engine/reference/commandline/compose/) - Version: 20.10.21
+* [Composer](https://getcomposer.org/) - Version: 2.4.4
+* [PHP](https://www.php.net/) - Image: 7.4.23-apache
+* [MariaDB](https://mariadb.org/) - Image: 10.4.21-focal  
+* [PHP Unit](https://www.phpmyadmin.net/) - Version: 9.5
 
-## Versiones incluidas
-* `PHP_VERSION`     -> 7.4.23-apache
-* `MARIADB_VERSION` -> 10.4.21-focal
+## Microservices
+* Datbase: MariaDb - Private Network: 192.168.20.10
+* Product Discount Calculation: Private Network: 192.168.20.20
+* Product List: Private Network: 192.168.20.30
 
-## Requerimientos
+* Product List: Public Network: 192.168.10.10
 
-* [Docker Desktop](https://www.docker.com/products/docker-desktop)
+## Environment Installation
 
-## Configurar el ambiente de desarrollo
-
-Puedes utilizar la configuración por defecto, pero en ocasiones es recomendable modificar la configuración para que sea igual al servidor de producción. La configuración se ubica en el archivo `.env` con las siguientes opciones:
-
-* `PHP_VERSION` versión de PHP ([Versiones disponibles de PHP](https://github.com/docker-library/docs/blob/master/php/README.md#supported-tags-and-respective-dockerfile-links)).
-* `PHP_PORT` puerto para servidor web.
-* `MARIADB_VERSION` versión de MARIADB([Versiones disponibles de MySQL](https://hub.docker.com/_/mariadb)).
-* `MARIADB_USER` nombre de usuario para conectarse a MARIADB.
-* `MARIADB_PASSWORD` clave de acceso para conectarse a MARIADB.
-* `MARIADB_DATABASE` nombre de la base de datos que se crea por defecto.
-
-## Instalar el ambiente de desarrollo
-
-La instalación se hace desde la línea de comandos:
+From console:
 ```zsh
-docker-compose up -d
+git clone https://github.com/kekosoftware/microservices_products.git
+composer install
+docker compose up -d
 ```
-Puedes validar que se ha instalado correctamente accediendo a: [http://localhost/info.php](http://localhost/info.php)
+You can check the service are running: [http://192.168.10.10](http://192.168.10.10)
 
-## Comandos disponibles
-
-Una vez instalado, se pueden utilizar los siguiente comandos:
+## Commands availables
 
 ```zsh
-docker-compose start    # Iniciar el ambiente de desarrollo
-docker-compose stop     # Detener el ambiente de desarrollo
-docker-compose down     # Detener y eliminar el ambiente de desarrollo.
+docker start  Container ID  # Initiating the container
+docker stop  Container ID   # Initiating the container
+docker compose down  # Stop the enviromment.
 ```
 
-## Estructura de Archivos
+## Database
 
-* `/docker/` contiene los archivos de configuración de Docker.
-* `/www/` carpeta para los archivos PHP del proyecto.
+You can use the file located in docker/db/tables.sql for initialize the database.
 
-## Accesos
-
-### Web
-
-* http://localhost/
-
-### Base de datos
-
-Existen dos dominios para conectarse a base de datos.
-
-* `MariaDB`: para conexión desde los archivos PHP.
-* `localhost`: para conexiones externas al contenedor.
-
-Las credenciales por defecto para la conexión son:
+Credentials for the connection:
 ```zsh
-Usuario:        userDB
-Contraseña:     pwdDB
-Base de datos:  nameDB
+User:     userDB
+Password: pwdDB
+
+User root: rootDB
+Password:  pwdDB
+
+Database:  mytheresa
 ```
+
+## How to
+
+* Endpoint - List all products: http://192.168.10.10/
+* Endpoint -  
