@@ -3,14 +3,5 @@
 
 require_once('./app/Discount.php');
 
-$cart = new Discount(499);
-$cart->discountAmount();
-echo "<br>";
-// Output
-//Paying 499 using PayPal
-
-$cart = new Discount(501);
-$cart->discountAmount();
-
-//Output 
-//Paying 501 using Credit Card
+$cart = new Discount($_GET['price'], $_GET['sku'], $_GET['category']);
+echo json_encode($cart->discountAmount());

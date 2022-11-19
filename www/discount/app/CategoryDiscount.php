@@ -2,11 +2,11 @@
 
 require_once "DiscountInterface.php";
 
-class MaxDiscount extends Discount implements DiscountInterface 
+class CategoryDiscount extends Discount implements DiscountInterface 
 {   
     public function getDiscount($amount = 0) 
     {
-        $discount = Max(self::DISCOUNT_CATEGORY,self::DISCOUNT_SKU);
+        $discount = self::DISCOUNT_CATEGORY;
         
         $finalPrice = intval($amount) - intval($amount) * $discount;  
         

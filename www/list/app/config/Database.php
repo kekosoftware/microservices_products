@@ -1,6 +1,7 @@
 <?php 
 
 class Database {
+    
     private $host = "192.168.20.10";
     private $database_name = "mytheresa";
     private $username = "userDB";
