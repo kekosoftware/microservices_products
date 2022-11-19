@@ -1,20 +1,23 @@
 <?php
 
-class Product{
-    // Connection
+class Product
+{    
     private $conn;
    
-    // Db connection
-    public function __construct($db) 
+    public function __construct() 
     {
-        $this->conn = $db;
+        require_once 'app/Database.php';
+        $database = new Database();
+        
+        $this->conn = $database->getConnection();
     }
 
     /**
      * * GET PRODUCTS
      */
-    public function getProducts(){
-        // FETCH
+    public function getProducts()
+    {
+        // Consulting database
         $stmt = $this->conn->prepare(
             "SELECT 
                 p.sku,
@@ -52,18 +55,23 @@ class Product{
      */
     public function getDiscount($product) 
     {
-        $curl = curl_init();
-   
-        $uri  = 'http://192.168.20.20/';
-        $uri .= '?price='.intval($product->price);
-        $uri .= '&sku='.intval($product->sku);
-        $uri .= '&category='.$product->category;
-    
-        curl_setopt($curl, CURLOPT_URL, $uri);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_HEADER, false);
-    
-        return curl_exec($curl);
+        try {
+            $curl = curl_init();
+       
+            $uri  = 'http://192.168.20.20/';
+            $uri .= '?price='.intval($product->price);
+            $uri .= '&sku='.intval($product->sku);
+            $uri .= '&category='.$product->category;
+        
+            curl_setopt($curl, CURLOPT_URL, $uri);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_HEADER, false);
+        
+            return curl_exec($curl);
+
+        } catch (\Throwable $th) {
+            return "An error occurred while recovery the discount. ".$th;
+        } 
 
         
     }

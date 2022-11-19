@@ -1,16 +1,24 @@
 <?php 
 
-class Database {
-    
-    private $host = "192.168.20.10";
-    private $database_name = "mytheresa";
-    private $username = "userDB";
-    private $password = "pwdDB";
+class Database 
+{    
+    private $host;
+    private $database_name;
+    private $username;
+    private $password;
     
     public $conn;
+
+    public function __construct() 
+    {
+        $this->host = "192.168.20.10";
+        $this->database_name = "mytheresa";
+        $this->username = "userDB";
+        $this->password = "pwdDB";
+    }
     
-    public function getConnection(){
-        
+    public function getConnection()
+    {    
         $this->conn = null;
         
         try {
