@@ -51,4 +51,5 @@ Database:  mytheresa
 ## How to
 
 * Endpoint - List all products: http://192.168.10.10/
-* Endpoint -  
+* Endpoint - List product with filter by category: http://192.168.10.10/?category=boots
+* Endpoint - List product with filter by category: http://192.168.10.10/?category=boots&priceLessThan=80000
