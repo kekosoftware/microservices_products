@@ -7,6 +7,7 @@
 * [PHP](https://www.php.net/) - Image: 7.4.23-apache
 * [MariaDB](https://mariadb.org/) - Image: 10.4.21-focal  
 * [PHP Unit](https://www.phpmyadmin.net/) - Version: 9.5
+* [curl](https://www.php.net/manual/es/book.curl.php) - [apt-get install php-curl] Version: 7.81.0
 
 ## Microservices
 * Datbase: MariaDb - Private Network: 192.168.20.10
@@ -52,4 +53,12 @@ Database:  mytheresa
 
 * Endpoint - List all products: http://192.168.10.10/
 * Endpoint - List product with filter by category: http://192.168.10.10/?category=boots
-* Endpoint - List product with filter by category: http://192.168.10.10/?category=boots&priceLessThan=80000
+* Endpoint - List product with filter by category and priceLessThan: http://192.168.10.10/?category=boots&priceLessThan=80000
+* Endpoint - List product with filter by priceLessThan: http://192.168.10.10/?priceLessThan=80000
+
+
+## Test with PHPUNIT
+```zsh
+vendor/bin/phpunit www/list/test/ProductTest.php --color --testdox
+vendor/bin/phpunit www/discount/test/DiscountTest.php --color --testdox
+```
