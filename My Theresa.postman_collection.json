@@ -1,0 +1,257 @@
+{
+	"info": {
+		"_postman_id": "bac70f73-5ad7-4d72-a19f-f337ad70a761",
+		"name": "My Theresa",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5720519"
+	},
+	"item": [
+		{
+			"name": "Max Discount",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "192.168.20.20?price=10000&sku=3&category=boots",
+					"host": [
+						"192",
+						"168",
+						"20",
+						"20"
+					],
+					"query": [
+						{
+							"key": "price",
+							"value": "10000"
+						},
+						{
+							"key": "sku",
+							"value": "3"
+						},
+						{
+							"key": "category",
+							"value": "boots"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Category Discount",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "192.168.20.20?price=10000&sku=5&category=boots",
+					"host": [
+						"192",
+						"168",
+						"20",
+						"20"
+					],
+					"query": [
+						{
+							"key": "price",
+							"value": "10000"
+						},
+						{
+							"key": "sku",
+							"value": "5"
+						},
+						{
+							"key": "category",
+							"value": "boots"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SKU Discount",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "192.168.20.20?price=10000&sku=3&category=sneakers",
+					"host": [
+						"192",
+						"168",
+						"20",
+						"20"
+					],
+					"query": [
+						{
+							"key": "price",
+							"value": "10000"
+						},
+						{
+							"key": "sku",
+							"value": "3"
+						},
+						{
+							"key": "category",
+							"value": "sneakers"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Without Discount",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "192.168.20.20?price=10000&sku=5&category=sneakers",
+					"host": [
+						"192",
+						"168",
+						"20",
+						"20"
+					],
+					"query": [
+						{
+							"key": "price",
+							"value": "10000"
+						},
+						{
+							"key": "sku",
+							"value": "5"
+						},
+						{
+							"key": "category",
+							"value": "sneakers"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product List - Filter with Category and PriceLessThan",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.10.10/?category=boots&priceLessThan=80000",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"10",
+						"10"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "category",
+							"value": "boots"
+						},
+						{
+							"key": "priceLessThan",
+							"value": "80000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product List - Filter with Category",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.10.10/?category=boots",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"10",
+						"10"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "category",
+							"value": "boots"
+						},
+						{
+							"key": "priceLessThan",
+							"value": "80000",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product List - Filter with PriceLessThan",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.10.10/?priceLessThan=80000",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"10",
+						"10"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "category",
+							"value": "boots",
+							"disabled": true
+						},
+						{
+							"key": "priceLessThan",
+							"value": "80000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product List - Without filter",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.10.10/",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"10",
+						"10"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "category",
+							"value": "boots",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
